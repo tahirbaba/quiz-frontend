@@ -52,14 +52,18 @@ export default function QuizDisplay({ prompt, onFinish }: QuizDisplayProps) {
 
         const data = await res.json();
         // Defensive check: ensure options are array
-        const safeQuestions = data.questions.map((q: any) => ({
-          ...q,
-          options: Array.isArray(q.options)
-            ? q.options
-            : typeof q.options === "string"
-            ? q.options.split(",").map((opt: string) => opt.trim())
-            : [],
-        }));
+const safeQuestions: Question[] = data.questions.map((q: {
+  question: string;
+  options: string[] | string;
+  answer: string;
+}) => ({
+  ...q,
+  options: Array.isArray(q.options)
+    ? q.options
+    : typeof q.options === "string"
+    ? q.options.split(",").map((opt) => opt.trim())
+    : [],
+}));
 
         setQuestions(safeQuestions);
       } catch (err) {
