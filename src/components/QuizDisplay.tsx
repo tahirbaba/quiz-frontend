@@ -42,7 +42,7 @@ export default function QuizDisplay({ prompt, onFinish }: QuizDisplayProps) {
   useEffect(() => {
     const fetchQuiz = async () => {
       try {
-        const res = await fetch("http://localhost:8000/generate-quiz", {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/generate-quiz`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
